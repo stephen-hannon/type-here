@@ -22,6 +22,14 @@ const getAndParse = (key) => {
     }
 }
 
+/**
+ * Set $el's height based on the height of its contents
+ * @param {HTMLElement} $el
+ */
+const setHeight = ($el) => {
+    $el.style.height = Math.max($el.scrollHeight, 200) + 'px';
+}
+
 const updateData = (index, property, value) => {
 	if (index === Number(localStorage.getItem('nextId'))) {
         const data = {
@@ -68,8 +76,11 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 
 	const $body = document.createElement('textarea');
 	$body.value = body;
-	$body.placeholder = 'Start typing...'
+    $body.placeholder = 'Start typing...';
+    setTimeout(setHeight, 0, $body);
 	$body.addEventListener('input', (event) => {
+        $body.style.height = 'auto';
+        setHeight($body);
 		updateData(index, 'body', event.target.value);
 	});
 
