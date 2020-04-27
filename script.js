@@ -60,7 +60,7 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 	$title.addEventListener('input', (event) => {
 		updateData(index, 'title', event.target.value);
     });
-    
+
     const $delete = document.createElement('button');
     $delete.textContent = 'delete';
     $delete.disabled = (index === Number(localStorage.getItem('nextId')))
