@@ -2,6 +2,12 @@
 	box-sizing: border-box;
 }
 
+html,
+input,
+button {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
 body {
 	margin: 15px;
 }
@@ -22,6 +28,7 @@ input {
 }
 
 textarea {
+	font-family: 'Source Code Pro', Consolas, Monaco, monospace;
     overflow-y: hidden;
 	display: block;
 	width: 100%;
