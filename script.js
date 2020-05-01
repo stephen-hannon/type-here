@@ -86,9 +86,8 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 	$note.appendChild($delete);
 	$note.appendChild($body);
 	prependChild(document.getElementById('notes'), $note);
-	if (isBlank) {
-		$body.focus();
-	}
+
+	return $note;
 }
 
 const initStorage = () => {
@@ -107,7 +106,9 @@ const initNotes = () => {
 		}
 		createNote(index, note);
 	});
-	createNote(Number(localStorage.getItem('nextId')));
+
+	const $newNote = createNote(Number(localStorage.getItem('nextId')));
+	$newNote.getElementsByTagName('textarea')[0].focus();
 }
 
 initStorage();
