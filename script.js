@@ -99,8 +99,8 @@ const initStorage = () => {
 }
 
 const initNotes = () => {
-	const items = getAndParse('ids').map(id => getAndParse(id));
-	items.forEach((note, index) => {
+	const items = getAndParse('ids').map(id => [getAndParse(id), id]);
+	items.forEach(([note, index]) => {
 		if (note === null) {
 			console.error(`Unable to find note at index ${index}`);
 			return;
