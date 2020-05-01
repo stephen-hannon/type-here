@@ -13,8 +13,8 @@ body {
 }
 
 .note {
-	border: 1px solid #aaa;
 	border-radius: 10px;
+	box-shadow: 0 0 6px 0 #00000080;
 	margin: 30px auto;
 	padding: 30px 15px;
 	max-width: 1000px;
