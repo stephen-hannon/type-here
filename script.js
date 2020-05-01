@@ -52,16 +52,9 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 	const $note = document.createElement('div');
 	$note.className = 'note';
 
-	const $title = document.createElement('input');
-	$title.value = title;
-	$title.placeholder = 'Title'
-	$title.addEventListener('input', (event) => {
-		updateData(index, 'title', event.target.value);
-	});
-
 	const $delete = document.createElement('button');
 	$delete.textContent = 'delete';
-	$delete.disabled = isBlank; // TODO: enable this after saving the note
+	$delete.disabled = isBlank;
 	$delete.addEventListener('click', (event) => {
 		const ids = getAndParse('ids');
 		const idsIndex = ids.indexOf(index);
@@ -72,6 +65,16 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 		event.target.parentNode.remove();
 	});
 
+	const $title = document.createElement('input');
+	$title.value = title;
+	$title.placeholder = 'Title'
+	$title.addEventListener('input', (event) => {
+		updateData(index, 'title', event.target.value);
+		if (isBlank) {
+			$delete.disabled = false;
+		}
+	});
+
 	const $body = document.createElement('textarea');
 	$body.value = body;
 	$body.placeholder = 'Start typing...';
@@ -80,6 +83,9 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 		$body.style.height = 'auto';
 		setHeight($body);
 		updateData(index, 'body', event.target.value);
+		if (isBlank) {
+			$delete.disabled = false;
+		}
 	});
 
 	$note.appendChild($title);
