@@ -1,15 +1,11 @@
-const storage = {
-	ids: [0, 1],
-	nextId: 2,
-	0: {
-		title: 'Title',
-		body: 'Hello\nworld!',
-	},
-	1: {
-		title: 'Foo',
-		body: 'Bar',
-	},
-};
+/**
+ * Makes $newNode the first child of $parentNode
+ * @param {Node} $parentNode
+ * @param {Node} $newNode
+ */
+const prependChild = ($parentNode, $newNode) => {
+    $parentNode.insertBefore($newNode, $parentNode.firstChild);
+}
 
 const getAndParse = (key) => {
     const value = localStorage.getItem(key);
@@ -51,6 +47,8 @@ const updateData = (index, property, value) => {
 }
 
 const createNote = (index, { title, body } = { title: '', body: '' }) => {
+    const isBlank = (index === Number(localStorage.getItem('nextId')));
+
 	const $note = document.createElement('div');
 	$note.className = 'note';
 
@@ -63,7 +61,7 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 
     const $delete = document.createElement('button');
     $delete.textContent = 'delete';
-    $delete.disabled = (index === Number(localStorage.getItem('nextId')))
+    $delete.disabled = isBlank; // TODO: enable this after saving the note
     $delete.addEventListener('click', (event) => {
         const ids = getAndParse('ids');
         const idsIndex = ids.indexOf(index);
@@ -87,7 +85,10 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 	$note.appendChild($title);
 	$note.appendChild($delete);
 	$note.appendChild($body);
-	document.getElementById('notes').appendChild($note);
+	prependChild(document.getElementById('notes'), $note);
+    if (isBlank) {
+        $body.focus();
+    }
 }
 
 const initStorage = () => {
