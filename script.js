@@ -23,7 +23,8 @@ const getAndParse = (key) => {
  * @param {HTMLElement} $el
  */
 const setHeight = ($el) => {
-	$el.style.height = Math.max($el.scrollHeight, 200) + 'px';
+	// TODO: figure out why the height is 15px shorter on load
+	$el.style.height = Math.max($el.scrollHeight, 150) + 15 + 'px';
 }
 
 const updateData = (index, property, value) => {
@@ -78,7 +79,7 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 	const $body = document.createElement('textarea');
 	$body.value = body;
 	$body.placeholder = 'Start typing...';
-	setTimeout(setHeight, 0, $body);
+	$body.style.height = 'auto';
 	$body.addEventListener('input', (event) => {
 		$body.style.height = 'auto';
 		setHeight($body);
@@ -93,6 +94,7 @@ const createNote = (index, { title, body } = { title: '', body: '' }) => {
 	$note.appendChild($body);
 	prependChild(document.getElementById('notes'), $note);
 
+	setTimeout(setHeight, 10, $body);
 	return $note;
 }
 
